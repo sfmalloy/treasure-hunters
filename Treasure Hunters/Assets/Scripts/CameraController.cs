@@ -5,19 +5,25 @@ public class CameraController : MonoBehaviour
     public GameObject player;
 
     Rigidbody2D rb;
+    Rigidbody2D playerRb;
 
-    const float threshold = 2.0f;
-    
+    const float xThreshold = 3.0f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerRb = player.GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (Mathf.Abs(player.transform.position.x - transform.position.x) > threshold)
-            rb.velocity = new Vector2(player.GetComponent<Rigidbody2D>().velocity.x, 0);
+        Vector2 velocity = new Vector2();
+        if (Mathf.Abs(playerRb.position.x - rb.position.x) > xThreshold)
+            velocity.x = player.GetComponent<Rigidbody2D>().velocity.x;
         else
-            rb.velocity = Vector2.zero;
+            velocity.x = 0.0f;
+        
+        rb.velocity = velocity;
+        rb.position = Vector2.Lerp(rb.position, new Vector2(rb.position.x, playerRb.position.y + 2.0f), 10.0f * Time.fixedDeltaTime);
     }
 }

@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     float jumpForce;
     float invincibilityTime;
     float dir;
+    float impulseForce;
+    float impulseDir;
 
     bool doJump;
     bool isInvincible;
@@ -35,6 +37,7 @@ public class PlayerController : MonoBehaviour
         fallGravityScale = jumpGravityScale * 1.25f;
         jumpForce = 22.0f;
         invincibilityTime = 2.5f;
+        impulseForce = 10.0f;
 
         doJump = false;        
         isInvincible = false;
@@ -70,26 +73,13 @@ public class PlayerController : MonoBehaviour
             else
                 rb.gravityScale = fallGravityScale;
         }
-        else
+        else if (!didImpulse)
         {
-            float forceDir;
-            if (dir < 0)
-                forceDir = 1;
-            else if (dir > 0)
-                forceDir = -1;
-            else
-                forceDir = 0;
-
-            print("Dir: " + dir + "  ForceDir: " + (1.25f * jumpForce * forceDir));
-
-            if (!didImpulse)
-            {
-                didImpulse = true;
-                print("Doing the impulse force thing");
-                rb.AddForce(new Vector2(0.5f * jumpForce * forceDir, jumpForce), ForceMode2D.Impulse);
-                StartCoroutine("PlayerBlink");
-                StartCoroutine("PlayerFreeze");
-            }
+            didImpulse = true;
+            print("Doing the impulse force thing");
+            rb.AddForce(new Vector2(impulseForce * impulseDir, impulseForce), ForceMode2D.Impulse);
+            StartCoroutine("PlayerBlink");
+            StartCoroutine("PlayerFreeze");
         }
     }
 
@@ -100,11 +90,23 @@ public class PlayerController : MonoBehaviour
         return hit.collider != null;
     }
 
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (!isInvincible && other.transform.CompareTag("Enemy"))
+        {
+            doDamageBounce = true;
+            impulseDir = transform.position.x - other.transform.position.x > 0 ? 1 : -1;
+            gameManager.TakeDamage(other.gameObject.GetComponent<IEnemy>().DealDamage());
+            StartCoroutine("DamageBoost");
+        }
+    }
+
     void OnCollisionStay2D(Collision2D other)
     {
         if (!isInvincible && other.transform.CompareTag("Enemy"))
         {
             doDamageBounce = true;
+            impulseDir = transform.position.x - other.transform.position.x > 0 ? 1 : -1;
             gameManager.TakeDamage(other.gameObject.GetComponent<IEnemy>().DealDamage());
             StartCoroutine("DamageBoost");
         }
@@ -120,7 +122,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator PlayerFreeze()
     {
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(0.4f);
         doDamageBounce = false;
     }
 

@@ -31,7 +31,7 @@ public class SpiderEnemy : MonoBehaviour, IEnemy
             dir = 1;
         }
 
-        transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + 0.01f * dir);
+        transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + 0.05f * dir);
     }
 
     public void AttackMovement()
