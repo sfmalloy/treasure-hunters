@@ -14,4 +14,13 @@ public class GameManager : MonoBehaviour
         scoreText.text = score.ToString();
         pickaxeText.text = pickaxeUses.ToString();
     }
+
+    public void TakeDamage(int value)
+    {
+        int newScore = score - value;
+        if (newScore >= 0)
+            score = newScore;
+        else
+            score = 0;
+    }
 }
