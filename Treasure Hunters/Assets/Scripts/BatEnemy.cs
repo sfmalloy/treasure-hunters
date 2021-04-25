@@ -4,6 +4,8 @@ using System.Collections;
 public class BatEnemy : MonoBehaviour, IEnemy
 {
     public GameObject player;
+    public float height;
+    public float sightDistance;
 
     Rigidbody2D rb;
     Rigidbody2D playerRb;
@@ -20,7 +22,6 @@ public class BatEnemy : MonoBehaviour, IEnemy
 
     float arcTime;
     float halfPeriod;
-    float height;
     float sign;
     
     void Start()
@@ -32,7 +33,6 @@ public class BatEnemy : MonoBehaviour, IEnemy
         startPos = rb.position;
 
         halfPeriod = 2.0f;
-        height = 3.0f;
         sign = 1.0f;
         animator = GetComponent<Animator>();
         animator.enabled = false;
@@ -43,7 +43,7 @@ public class BatEnemy : MonoBehaviour, IEnemy
 
     void FixedUpdate()
     {
-        if (!wait && (attacking || (Vector2.Distance(playerRb.position, rb.position) < 5)))
+        if (!wait && (attacking || (Vector2.Distance(playerRb.position, rb.position) < sightDistance)))
         {
             if (!attacking)
             {

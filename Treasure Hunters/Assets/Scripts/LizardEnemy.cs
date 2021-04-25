@@ -7,12 +7,14 @@ public class LizardEnemy : MonoBehaviour, IEnemy
 
     Rigidbody2D rb;
     Vector2 startPos;
-    float dir;
+    [SerializeField] float dir;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         startPos = rb.position;
-        dir = -1.0f;
+
+        if (dir == 0)
+            dir = -1.0f;
     }
 
     void Update()

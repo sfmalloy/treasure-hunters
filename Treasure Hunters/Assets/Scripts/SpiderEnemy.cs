@@ -4,6 +4,8 @@ public class SpiderEnemy : MonoBehaviour, IEnemy
 {
     public float topHeight;
     public float bottomHeight;
+    [Range(0.01f, 0.03f)]
+    public float speed = 0.01f;
 
     int dir;
     bool goingDown;
@@ -31,7 +33,7 @@ public class SpiderEnemy : MonoBehaviour, IEnemy
             dir = 1;
         }
 
-        transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + 0.05f * dir);
+        transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + speed * dir);
     }
 
     public int DealDamage()
