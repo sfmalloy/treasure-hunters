@@ -15,11 +15,11 @@ public class SpiderEnemy : MonoBehaviour, IEnemy
 
     void Update()
     {
-       IdleMovement();
+       AttackMovement();
     }
 
-    public void IdleMovement()
-    {
+    public void AttackMovement()
+    {  
         if (!goingDown && transform.localPosition.y >= topHeight)
         {
             goingDown = true;
@@ -33,9 +33,6 @@ public class SpiderEnemy : MonoBehaviour, IEnemy
 
         transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + 0.05f * dir);
     }
-
-    public void AttackMovement()
-    {  }
 
     public int DealDamage()
     {

@@ -2,7 +2,7 @@
 
 public class CollectTreasure : MonoBehaviour
 {
-    GameManager gameManager;
+    public GameManager gameManager;
     public int value;
 
     void Start()
@@ -12,6 +12,7 @@ public class CollectTreasure : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        print("fnasjkdldfnlj");
         if (other.CompareTag("Player"))
         {
             gameManager.score += value;

@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     {
         addingScore = true;
         float timeStep = 0.01f;
-        while (int.Parse(scoreText.text) < score)
+        while (int.Parse(scoreText.text) > score)
         {
             scoreText.text = (int.Parse(scoreText.text) - 1).ToString();
             yield return new WaitForSeconds(timeStep);

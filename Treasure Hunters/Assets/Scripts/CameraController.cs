@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerRb = player.GetComponent<Rigidbody2D>();
+        rb.position = new Vector2(playerRb.position.x, rb.position.y);
     }
 
     void FixedUpdate()
