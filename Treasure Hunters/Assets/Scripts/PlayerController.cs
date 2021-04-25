@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
     bool IsGrounded()
     {
         RaycastHit2D hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0,
-          Vector2.down, boxCollider.bounds.extents.y + 0.1f, groundMask | enemyMask);
+          Vector2.down, boxCollider.bounds.extents.y, groundMask | enemyMask);
         return hit.collider != null;
     }
 
