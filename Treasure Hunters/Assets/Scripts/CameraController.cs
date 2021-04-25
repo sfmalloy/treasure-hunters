@@ -3,17 +3,17 @@
 public class CameraController : MonoBehaviour
 {
     public GameObject player;
+    public float xThreshold = 2.5f;
 
     Rigidbody2D rb;
     Rigidbody2D playerRb;
 
-    const float xThreshold = 3.0f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         playerRb = player.GetComponent<Rigidbody2D>();
-        rb.position = new Vector2(playerRb.position.x, rb.position.y);
+        rb.position = new Vector2(playerRb.position.x, playerRb.position.y + 1.0f);
     }
 
     void FixedUpdate()
@@ -25,6 +25,6 @@ public class CameraController : MonoBehaviour
             velocity.x = 0.0f;
         
         rb.velocity = velocity;
-        rb.position = Vector2.Lerp(rb.position, new Vector2(rb.position.x, playerRb.position.y + 2.0f), 10.0f * Time.fixedDeltaTime);
+        rb.position = Vector2.Lerp(rb.position, new Vector2(rb.position.x, playerRb.position.y + 1.0f), 10.0f * Time.fixedDeltaTime);
     }
 }
